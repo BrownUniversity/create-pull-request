@@ -32,11 +32,12 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - run: |  
+    - id: pull-request
+      run: |  
         if [ '${{ inputs.draft }}' = 'true' ]; then
-          echo 'DRAFT=--draft' >> $GITHUB_ENV
+          echo 'draft=--draft' >> $GITHUB_ENV
         else
-          echo 'DRAFT= ' >> $GITHUB_ENV
+          echo 'draft= ' >> $GITHUB_ENV
         fi
         git checkout -b ${{ inputs.branch-name }}
         git config user.email "${{ github.actor }}@users.noreply.github.com"
@@ -44,7 +45,7 @@ runs:
         git commit -am "${{ inputs.commit-message }}"
         git push -u origin ${{ inputs.branch-name }}
         echo 'pr_url<<EOF' >> $GITHUB_ENV
-        gh pr create --title "${{ inputs.title }}" --body "${{ inputs.description }}" $DRAFT >> $GITHUB_ENV
+        gh pr create --title "${{ inputs.title }}" --body "${{ inputs.description }}" ${{ env.draft }} >> $GITHUB_ENV
         echo 'EOF' >> $GITHUB_ENV
         echo "::set-output name=pr-url::${{ env.pr-url }})"
       env:
