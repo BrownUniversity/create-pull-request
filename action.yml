@@ -46,5 +46,7 @@ runs:
         echo 'pr_url<<EOF' >> $GITHUB_ENV
         gh pr create --title "${{ inputs.title }}" --body "${{ inputs.description }}" $DRAFT >> $GITHUB_ENV
         echo 'EOF' >> $GITHUB_ENV
+      env:
+        GITHUB_TOKEN: ${{ inputs.token }}
       working-directory: ${{ inputs.directory }}
       shell: bash
