@@ -12,8 +12,7 @@ inputs:
     required: true
   title:
     description: 'PR title'
-    required: false
-    default: ${{ inputs.commit-message }}
+    required: true
   description:
     description: 'PR description'
     required: false
