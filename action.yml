@@ -1,0 +1,53 @@
+name: 'Create Pull Request'
+description: 'Create a Pull Request'
+inputs:
+  branch-name:
+    description: 'Branch name'
+    required: true
+  commit-message:
+    description: 'Commit message'
+    required: true
+  title:
+    description: 'PR title'
+    required: false
+    default: ${{ inputs.commit-message }}
+  description:
+    description: 'PR description'
+    required: false
+    default: ''
+  draft:
+    description: 'Create a Draft PR'
+    required: false
+    default: 'false'
+  token:
+    description: 'Personal Access Token'
+    required: false
+    default: ${{ github.token }}
+outputs:
+  pr-url:
+    description: "New PR URL"
+    value: ${{ env.pr-url }}
+runs:
+  using: "composite"
+  steps:
+    - name: Setup
+      run: |  
+        git checkout -b ${{ inputs.branch-name }}
+        git config user.email "${{ github.actor }}@users.noreply.github.com"
+        git config user.name "${{ github.actor }}"
+        git commit -am ${{ inputs.commit-message }}
+        git push -u origin ${{ inputs.branch-name }}
+        echo 'module_pr_url<<EOF' >> $GITHUB_ENV
+      shell: bash
+    - name: Create Draft PR
+      run: gh pr create --title ${{ inputs.title }}  --body ${{ inputs.description }} --draft >> $GITHUB_ENV
+      env:
+        GITHUB_TOKEN: ${{ inputs.token }}
+      shell: bash
+    - name: Create Open PR
+      run: gh pr create --title ${{ inputs.title }} --body ${{ inputs.description }} >> $GITHUB_ENV
+      env:
+        GITHUB_TOKEN: ${{ inputs.token }}
+      shell: bash
+    - run: echo 'EOF' >> $GITHUB_ENV
+      shell: bash
