@@ -44,7 +44,7 @@ runs:
         git commit -am "${{ inputs.commit-message }}"
         git push -u origin ${{ inputs.branch-name }}
         echo 'pr_url<<EOF' >> $GITHUB_ENV
-        gh pr create --title ${{ inputs.title }}  --body ${{ inputs.description }} $DRAFT >> $GITHUB_ENV
+        gh pr create --title "${{ inputs.title }}" --body "${{ inputs.description }}" $DRAFT >> $GITHUB_ENV
         echo 'EOF' >> $GITHUB_ENV
       working-directory: ${{ inputs.directory }}
       shell: bash
