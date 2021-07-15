@@ -16,10 +16,10 @@ Creates a pull request in the current directory's repo.
 - `directory`: Directory in which to create the branch
 - `branch-name`
 - `commit-message`
+- `title`: PR title
 
 #### Optional
 
-- `title`: PR title
 - `description`: PR description
 - `draft`: Create draft PR
 - `token`: Personal Access Token
