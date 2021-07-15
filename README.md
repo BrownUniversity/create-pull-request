@@ -13,6 +13,7 @@ Creates a pull request in the current directory's repo.
 
 #### Required
 
+- `directory`: Directory in which to create the branch
 - `branch-name`
 - `commit-message`
 

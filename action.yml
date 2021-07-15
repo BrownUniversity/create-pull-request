@@ -1,6 +1,9 @@
 name: 'Create Pull Request'
 description: 'Create a Pull Request'
 inputs:
+  directory:
+    description: 'Directory name'
+    required: true
   branch-name:
     description: 'Branch name'
     required: true
@@ -44,4 +47,5 @@ runs:
         echo 'pr_url<<EOF' >> $GITHUB_ENV
         gh pr create --title ${{ inputs.title }}  --body ${{ inputs.description }} $DRAFT >> $GITHUB_ENV
         echo 'EOF' >> $GITHUB_ENV
+      working-directory: ${{ inputs.directory }}
       shell: bash
