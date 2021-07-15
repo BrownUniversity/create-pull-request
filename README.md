@@ -23,7 +23,3 @@ Creates a pull request in the current directory's repo.
 - `description`: PR description
 - `draft`: Create draft PR
 - `token`: Personal Access Token
-
-### Outputs
-
-- `pr_url`: URL of created PR
