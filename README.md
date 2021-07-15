@@ -26,4 +26,4 @@ Creates a pull request in the current directory's repo.
 
 ### Outputs
 
-- `pr-url`: URL of created PR
+- `pr_url`: URL of created PR
