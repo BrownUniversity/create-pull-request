@@ -34,9 +34,9 @@ runs:
   steps:
     - run: |  
         if [ '${{ inputs.draft }}' = 'true' ]; then
-          echo 'draft=--draft' >> $GITHUB_ENV
+          echo 'DRAFT=--draft' >> $GITHUB_ENV
         else
-          echo 'draft= ' >> $GITHUB_ENV
+          echo 'DRAFT= ' >> $GITHUB_ENV
         fi
         git checkout -b ${{ inputs.branch-name }}
         git config user.email "${{ github.actor }}@users.noreply.github.com"
