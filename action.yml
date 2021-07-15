@@ -51,6 +51,7 @@ runs:
         echo 'pr_url<<EOF' >> $GITHUB_ENV
         gh pr create --title "${{ inputs.title }}" --body "${{ inputs.description }}" ${{ steps.set-draft.outputs.draft }} >> $GITHUB_ENV
         echo 'EOF' >> $GITHUB_ENV
+        echo "::set-output name=pr-url::${{ env.pr-url }}"
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
       working-directory: ${{ inputs.directory }}
