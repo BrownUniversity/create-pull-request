@@ -50,7 +50,7 @@ runs:
         git config user.name "${{ github.actor }}"
         git commit -am "${{ inputs.commit-message }}"
         git push -u origin ${{ inputs.branch-name }}
-        echo '::set-output name=pr-url::$(gh pr create --title "${{ inputs.title }}" --body "${{ inputs.description }}" ${{ steps.set-draft.outputs.draft }})'
+        echo "::set-output name=pr-url::$(gh pr create --title "${{ inputs.title }}" --body "${{ inputs.description }}" ${{ steps.set-draft.outputs.draft }})"
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
       working-directory: ${{ inputs.directory }}
