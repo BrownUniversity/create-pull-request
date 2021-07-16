@@ -9,8 +9,6 @@ Creates a pull request in the specified directory's repo.
   uses: brownuniversity/create-pull-request@v1.0.15
 ```
 
-Sets `env.pr_url` to the URL of the new pull request.
-
 ### Inputs
 
 #### Required
@@ -25,6 +23,10 @@ Sets `env.pr_url` to the URL of the new pull request.
 - `description`: PR description
 - `draft`: Create draft PR
 - `token`: Personal Access Token (defaults to `github.token`)
+
+### Outputs
+
+- `new-pr-url`: URL of created PR
 
 ## Example
 
@@ -47,6 +49,7 @@ jobs:
       - name: Make change to destination repo
         run: cp main/file.txt destination/file.txt
       - name: Create Pull Request in Destination Repo
+        id: pull-request
         uses: brownuniversity/create-pull-request@v1.0.15
         with:
           token: ${{ secrets.PAT }}
@@ -56,4 +59,6 @@ jobs:
           description: "Fixed comma splice"
           draft: true
           directory: "destination"
+      - name: Print PR URL
+        run: echo ${{ steps.pull-request.outputs.new-pr-url }}
 ```

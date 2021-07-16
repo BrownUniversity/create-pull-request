@@ -25,6 +25,11 @@ inputs:
     description: 'Personal Access Token'
     required: false
     default: ${{ github.token }}
+outputs:
+  new-pr-url:
+    description: 'URL of Created PR'
+    value: ${{ steps.pull-request.outputs.pr-url }}
+    
 runs:
   using: "composite"
   steps:
@@ -45,9 +50,7 @@ runs:
         git config user.name "${{ github.actor }}"
         git commit -am "${{ inputs.commit-message }}"
         git push -u origin ${{ inputs.branch-name }}
-        echo 'pr_url<<EOF' >> $GITHUB_ENV
-        gh pr create --title "${{ inputs.title }}" --body "${{ inputs.description }}" ${{ steps.set-draft.outputs.draft }} >> $GITHUB_ENV
-        echo 'EOF' >> $GITHUB_ENV
+        echo '::set-output name=pr-url::$(gh pr create --title "${{ inputs.title }}" --body "${{ inputs.description }}" ${{ steps.set-draft.outputs.draft }})'
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
       working-directory: ${{ inputs.directory }}
