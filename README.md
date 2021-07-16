@@ -6,7 +6,7 @@ Creates a pull request in the specified directory's repo.
 
 ```yml
 - name: Create Pull Request
-  uses: brownuniversity/create-pull-request@v1.0.15
+  uses: brownuniversity/create-pull-request@v1
 ```
 
 ### Inputs
