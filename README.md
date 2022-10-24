@@ -6,7 +6,7 @@ Creates a pull request in the specified directory's repo.
 
 ```yml
 - name: Create Pull Request
-  uses: brownuniversity/create-pull-request@v2
+  uses: brownuniversity/create-pull-request@v1
 ```
 
 ### Inputs
@@ -50,7 +50,7 @@ jobs:
         run: cp main/file.txt destination/file.txt
       - name: Create Pull Request in Destination Repo
         id: pull-request
-        uses: brownuniversity/create-pull-request@v2
+        uses: brownuniversity/create-pull-request@v1
         with:
           token: ${{ secrets.PAT }}
           branch-name: task/update-file
