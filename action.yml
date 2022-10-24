@@ -28,7 +28,7 @@ inputs:
 outputs:
   new-pr-url:
     description: 'URL of Created PR'
-    value: ${{ steps.pull-request.outputs.pr-url }}
+    value: ${{ steps.pull-request.outputs.PR_URL }}
     
 runs:
   using: "composite"
@@ -37,9 +37,9 @@ runs:
       id: set-draft
       run: |
         if [ '${{ inputs.draft }}' = 'true' ]; then
-          echo "::set-output name=draft::--draft"
+          echo 'DRAFT="--draft"' >> $GITHUB_OUTPUT
         else
-          echo "::set-output name=draft:: "
+          echo 'DRAFT=""' >> $GITHUB_OUTPUT
         fi
       shell: bash
     - name: Create Pull Request
@@ -50,7 +50,7 @@ runs:
         git config user.name "${{ github.actor }}"
         git commit -am "${{ inputs.commit-message }}"
         git push -u origin ${{ inputs.branch-name }}
-        echo "::set-output name=pr-url::$(gh pr create --title "${{ inputs.title }}" --body "${{ inputs.description }}" ${{ steps.set-draft.outputs.draft }})"
+        echo "PR_URL=$(gh pr create --title "${{ inputs.title }}" --body "${{ inputs.description }}" ${{ steps.set-draft.outputs.DRAFT }})" >> $GITHUB_OUTPUT
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
       working-directory: ${{ inputs.directory }}
