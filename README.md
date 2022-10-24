@@ -37,11 +37,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: main
       - name: Checkout Destination Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: "BrownUniversity/destination-repo"
           path: destination
@@ -50,7 +50,7 @@ jobs:
         run: cp main/file.txt destination/file.txt
       - name: Create Pull Request in Destination Repo
         id: pull-request
-        uses: brownuniversity/create-pull-request@v1.0.15
+        uses: brownuniversity/create-pull-request@v1
         with:
           token: ${{ secrets.PAT }}
           branch-name: task/update-file
