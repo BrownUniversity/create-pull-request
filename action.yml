@@ -33,15 +33,6 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Set Draft
-      id: set-draft
-      run: |
-        if [ '${{ inputs.draft }}' = 'true' ]; then
-          echo 'DRAFT="--draft"' >> $GITHUB_OUTPUT
-        else
-          echo 'DRAFT=""' >> $GITHUB_OUTPUT
-        fi
-      shell: bash
     - name: Create Pull Request
       id: pull-request
       run: |  
@@ -50,7 +41,11 @@ runs:
         git config user.name "${{ github.actor }}"
         git commit -am "${{ inputs.commit-message }}"
         git push -u origin ${{ inputs.branch-name }}
-        echo "PR_URL=$(gh pr create --title "${{ inputs.title }}" --body "${{ inputs.description }}" ${{ steps.set-draft.outputs.DRAFT }})" >> $GITHUB_OUTPUT
+        if [ '${{ inputs.draft }}' = 'true' ]; then
+          echo "PR_URL=$(gh pr create --title "${{ inputs.title }}" --body "${{ inputs.description }}" --draft)" >> $GITHUB_OUTPUT
+        else
+          echo "PR_URL=$(gh pr create --title "${{ inputs.title }}" --body "${{ inputs.description }}")" >> $GITHUB_OUTPUT
+        fi
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
       working-directory: ${{ inputs.directory }}
